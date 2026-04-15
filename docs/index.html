@@ -116,7 +116,15 @@
             </table>
         </div>
         <div style="width:150px;flex-shrink:0;background:rgba(26,32,53,0.6);border:1px solid rgba(99,179,237,0.1);border-radius:10px;padding:1rem;position:sticky;top:1rem">
-            <div style="font-size:0.68rem;color:#718096;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.8rem;font-weight:600">Badges</div>
+            <div style="font-size:0.68rem;color:#718096;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.6rem;font-weight:600">Levels</div>
+            <div style="font-size:0.78rem;color:#a0aec0;line-height:1.8;margin-bottom:1rem">
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#68d39120;color:#68d391;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #68d39140">1</span> Registered<br>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#63b3ed20;color:#63b3ed;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #63b3ed40">2</span> Running<br>
+                <span style="display:inline-flex;align-items:center;justify-content:center;width:16px;height:16px;border-radius:50%;background:#b794f420;color:#b794f4;font-size:0.6rem;font-weight:700;font-family:'JetBrains Mono',monospace;border:1px solid #b794f440">3</span> Shipping<br>
+                <span style="font-size:0.65rem;color:#4a5568;margin-left:20px">L3 = guaranteed place</span><br>
+                <span style="font-size:0.65rem;color:#ed8936;margin-left:20px">2x = multiple tracks</span>
+            </div>
+            <div style="font-size:0.68rem;color:#718096;text-transform:uppercase;letter-spacing:0.05em;margin-bottom:0.6rem;font-weight:600">Badges</div>
             <div style="font-size:0.78rem;color:#a0aec0;line-height:2">
                 🐦 Early Bird<br>
                 <span style="color:#4a5568;font-size:0.65rem">First 10 to register</span><br>
@@ -260,17 +268,15 @@ function render() {
 
         const badges = (d._badges || []).map(b => `<span data-tip="${b.tip}" style="cursor:help;margin-left:0.2rem">${b.icon}</span>`).join('');
 
-        // Level indicator next to name
+        // Level indicator + track count combined
         const lvColors = {1:'#68d391',2:'#63b3ed',3:'#b794f4'};
-        const lvNum = `<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:${lvColors[d.level]||'#718096'}20;color:${lvColors[d.level]||'#718096'};font-size:0.65rem;font-weight:700;font-family:'JetBrains Mono',monospace;margin-right:0.4rem;border:1px solid ${lvColors[d.level]||'#718096'}40">${d.level}</span>`;
-
-        // Track count
         const trackCount = d.track ? d.track.split(/[,\/]/).filter(t => t.trim() && t.trim().match(/^[A-E]/)).length : 0;
-        const trackBadge = trackCount > 1 ? `<span style="font-size:0.6rem;color:#ed8936;margin-left:0.3rem" data-tip="${trackCount} tracks">${trackCount}x</span>` : '';
+        const multiTrack = trackCount > 1 ? `<span style="font-size:0.55rem;color:#ed8936;margin-left:1px" data-tip="${trackCount} tracks">${trackCount}x</span>` : '';
+        const lvNum = `<span style="display:inline-flex;align-items:center;justify-content:center;width:18px;height:18px;border-radius:50%;background:${lvColors[d.level]||'#718096'}20;color:${lvColors[d.level]||'#718096'};font-size:0.65rem;font-weight:700;font-family:'JetBrains Mono',monospace;margin-right:0.3rem;border:1px solid ${lvColors[d.level]||'#718096'}40">${d.level}</span>${multiTrack}`;
 
         return `<tr>
             <td class="${rc}">${i + 1}</td>
-            <td>${lvNum}<strong>${d.name}</strong>${trackBadge}${badges}</td>
+            <td>${lvNum}<strong style="margin-left:0.2rem">${d.name}</strong>${badges}</td>
             <td><span class="lv ${lvCls}">${lvTxt}</span></td>
             <td>${scoreDisplay}</td>
             <td style="font-size:0.78rem;color:#a0aec0">${track}</td>
