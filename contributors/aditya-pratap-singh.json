@@ -3,7 +3,29 @@
   "github": "psinghaditya",
   "program": "B.Tech CSE",
   "campus": "Amity University",
-  "skills": ["python", "java", "ai"],
-  "interests": ["agents", "machine learning", "nlp"],
+  "skills": [
+    "python",
+    "java",
+    "c++",
+    "operating systems",
+    "dbms",
+    "computer networks",
+    "machine learning",
+    "ai",
+    "nlp",
+    "nodejs",
+    "git"
+  ],
+  "interests": [
+    "agents",
+    "machine learning",
+    "nlp",
+    "security"
+  ],
+  "agent_repo": "https://github.com/psinghaditya/digital-twin-advisor-agent-Adi",
+  "tracks": [
+    "A: Agent Builders",
+    "E: QA & Security"
+  ],
   "my_twin": "I want to track my daily study hours, sleep quality and focus levels to understand when I am most productive."
 }
