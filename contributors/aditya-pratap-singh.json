@@ -1,9 +1,30 @@
 {
-  "name": "Aditya Pratap Singh",
-  "github": "psinghaditya",
-  "program": "B.Tech CSE",
-  "campus": "Amity University",
-  "skills": ["python", "java", "ai"],
-  "interests": ["agents", "machine learning", "nlp"],
-  "my_twin": "I want to track my daily study hours, sleep quality and focus levels to understand when I am most productive."
+"name": "Aditya Pratap Singh",
+"github": "psinghaditya",
+"program": "B.Tech CSE",
+"campus": "Amity University",
+
+"track": [
+"A: Agent Builders",
+"E: QA & Security"
+],
+
+"skills": [
+"python",
+"java",
+"c",
+"c++",
+"operating systems",
+"dbms",
+"computer networks",
+"machine learning",
+"ai",
+"nlp",
+"nodejs",
+"git"
+],
+
+"interests": ["agents", "machine learning", "nlp"],
+
+"my_twin": "I want to track my daily study hours, sleep quality and focus levels to understand when I am most productive."
 }
