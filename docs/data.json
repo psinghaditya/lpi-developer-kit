@@ -536,6 +536,46 @@
       "score_pct": 60
     },
     {
+      "name": "Sania Gurung",
+      "github": "SANIAGRG",
+      "skills": [
+        "python",
+        "machine-learning",
+        "tensorflow",
+        "computer-vision",
+        "java",
+        "sql",
+        "scikit-learn"
+      ],
+      "interests": [
+        "agents",
+        "NLP",
+        "AI-pipelines"
+      ],
+      "track": "",
+      "level": 2
+    },
+    {
+      "name": "Abhinav Chaudhary",
+      "github": "https://github.com/abhichaudhary256-sudo",
+      "skills": [
+        "Python",
+        "git",
+        "rest apis",
+        "machine Learning",
+        "nlp"
+      ],
+      "interests": [
+        "ai agents",
+        "backend systems",
+        "api design",
+        "machine learning",
+        "blockchain"
+      ],
+      "track": "A: Agent Builders",
+      "level": 1
+    },
+    {
       "name": "Abhishek Sharma",
       "github": "Abhishek2006-Sharma",
       "skills": [
@@ -775,6 +815,28 @@
         "Skiing"
       ],
       "track": "E: QA & Security",
+      "level": 1
+    },
+    {
+      "name": "Khushbu Kumari",
+      "github": "your-github-username",
+      "skills": [
+        "java",
+        "spring boot",
+        "react",
+        "node.js",
+        "sql",
+        "docker",
+        "kubernetes"
+      ],
+      "interests": [
+        "AI",
+        "RAG",
+        "full-stack",
+        "cloud",
+        "cybersecurity"
+      ],
+      "track": "",
       "level": 1
     },
     {
@@ -1018,26 +1080,6 @@
         "Full-Stack Development"
       ],
       "track": "A: Agent Builders",
-      "level": 1
-    },
-    {
-      "name": "Sania Gurung",
-      "github": "SANIAGRG",
-      "skills": [
-        "python",
-        "machine-learning",
-        "tensorflow",
-        "computer-vision",
-        "java",
-        "sql",
-        "scikit-learn"
-      ],
-      "interests": [
-        "agents",
-        "NLP",
-        "AI-pipelines"
-      ],
-      "track": "",
       "level": 1
     },
     {
