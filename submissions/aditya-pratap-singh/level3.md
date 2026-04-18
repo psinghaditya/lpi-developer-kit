@@ -13,7 +13,7 @@ I built a Digital Twin Advisor Agent that helps users plan digital twin implemen
 
 The agent accepts a user question related to digital twins and retrieves relevant knowledge from the LPI knowledge base using MCP tool calls. It combines knowledge entries, case studies, and implementation insights to generate practical recommendations.
 
-The goal was to demonstrate how an AI agent can query structured knowledge tools and produce explainable recommendations.
+The goal of the project was to demonstrate how an AI agent can query structured knowledge tools and produce explainable recommendations.
 
 ---
 
@@ -53,13 +53,13 @@ These tools provide:
 • real-world case studies  
 • scenario-based implementation insights  
 
-The agent retrieves outputs from multiple tools and combines them to generate recommendations using the SMILE methodology.
+The agent retrieves outputs from multiple LPI tools and combines them to generate recommendations using the SMILE methodology.
 
 ---
 
 ## Explainability
 
-The agent explicitly shows which LPI tools were used when generating the response.
+The agent clearly shows which LPI tools were used when generating the response.
 
 This allows the user to trace how the final recommendation was produced and which knowledge sources were used.
 
@@ -88,7 +88,7 @@ Agent Response:
 
 "Please provide a valid digital twin question."
 
-The agent also handles tool failures and continues execution even if one of the tools does not respond successfully.
+The agent also handles tool execution errors and continues running even if one of the tools fails.
 
 ---
 
@@ -96,19 +96,19 @@ The agent also handles tool failures and continues execution even if one of the 
 
 One design choice I made was focusing on a Digital Twin Advisor use case that combines knowledge, case studies, and insights into a single workflow.
 
-This allows the agent to demonstrate explainability and multi-source reasoning instead of only returning static answers.
+This allowed the agent to demonstrate explainability and multi-source reasoning instead of only returning static answers.
 
-Another design choice was using MCP-based tool calls to query the LPI knowledge base so the agent can interact with multiple tools in a structured and extensible way.
+Another design choice was using MCP-based tool calls to interact with the LPI sandbox, allowing the agent to retrieve information dynamically from multiple knowledge tools.
 
 ---
 
 ## What I Would Improve Next Time
 
-If I extended this project further, I would:
+If I extended the project further, I would:
 
-• add structured JSON output for downstream systems  
-• implement automated testing for agent workflows  
-• improve tool result parsing for richer recommendations  
+• add structured JSON outputs for downstream applications  
+• implement automated tests for agent workflows  
+• improve parsing of tool responses for richer recommendations  
 • build a simple web interface for interacting with the agent
 
 ---
