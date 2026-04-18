@@ -1,36 +1,8 @@
-// digital-twin-advisor.ts
-
 import readline from "readline";
 import { spawn } from "child_process";
 
-// ── Types ─────────────────────────────────────────
-
-interface ToolResult {
-  tool: string;
-  data: string;
-  ok: boolean;
-}
-
-interface AgentConfig {
-  mcpPath: string;
-  industry: string;
-  timeoutMs: number;
-}
-
-const DEFAULT_CONFIG: AgentConfig = {
-  mcpPath: "../dist/src/index.js",
-  industry: "manufacturing",
-  timeoutMs: 10000
-};
-
-// ── LPI Tool Caller (MCP) ─────────────────────────
-
-function callLPITool(
-  toolName: string,
-  args: Record<string, unknown>,
-  config: AgentConfig
-): Promise<string> {
-
+// Call an LPI MCP tool
+function callLPITool(toolName, args) {
   return new Promise((resolve, reject) => {
 
     const payload = JSON.stringify({
@@ -42,165 +14,77 @@ function callLPITool(
         arguments: args
       }
     });
-
-    const child = spawn("node", [config.mcpPath]);
-
-    let stdout = "";
-    let stderr = "";
-
-    const timer = setTimeout(() => {
-      child.kill();
-      reject(new Error(`Tool ${toolName} timeout`));
-    }, config.timeoutMs);
-
-    child.stdout.on("data", (chunk) => {
-      stdout += chunk.toString();
+    const child = spawn("node", ["../dist/src/index.js"]);
+    let output = "";
+    let error = "";
+    child.stdout.on("data", (data) => {
+      output += data.toString();
     });
 
-    child.stderr.on("data", (chunk) => {
-      stderr += chunk.toString();
+    child.stderr.on("data", (data) => {
+      error += data.toString();
     });
 
     child.on("close", (code) => {
-      clearTimeout(timer);
-
       if (code !== 0) {
-        reject(new Error(stderr));
+        reject(error);
       } else {
-        resolve(stdout);
+        resolve(output);
       }
     });
-
     child.stdin.write(payload);
     child.stdin.end();
-
   });
 }
+// Agent workflow
+async function runAgent(question) {
 
-// ── Fetch LPI Context ─────────────────────────
-
-async function fetchLPIContext(
-  question: string,
-  config: AgentConfig
-): Promise<ToolResult[]> {
-
-  const calls: Array<[string, Record<string, unknown>]> = [
-
-    ["query_knowledge", { query: question }],
-
-    ["get_case_studies", { industry: config.industry }],
-
-    ["get_insights", { scenario: question }]
-
-  ];
-
-  const results: ToolResult[] = [];
-
-  for (const [tool, args] of calls) {
-
-    try {
-
-      const data = await callLPITool(tool, args, config);
-
-      results.push({
-        tool,
-        data,
-        ok: true
-      });
-
-    } catch (err) {
-
-      console.warn(`⚠ ${tool} failed`);
-
-      results.push({
-        tool,
-        data: "",
-        ok: false
-      });
-
-    }
-  }
-
-  return results;
-}
-
-// ── Generate Recommendation (no external API) ─────────────────────────
-
-function generateRecommendation(question: string): string {
-
-  return `
-SMILE Recommendation
-
-Simulate
-Create a digital representation of the system described in the question.
-
-Monitor
-Collect real-time sensor data and operational metrics.
-
-Integrate
-Combine multiple data sources into the digital twin model.
-
-Learn
-Apply analytics or machine learning to detect patterns.
-
-Execute
-Use predictions and insights to optimize system performance.
-`;
-}
-
-// ── Main Agent ─────────────────────────
-
-async function runAgent(
-  question: string,
-  config: AgentConfig = DEFAULT_CONFIG
-) {
-
-  const trimmed = question.trim();
-
-  if (!trimmed) {
-    console.error("Please enter a valid question.");
+  if (!question || question.trim() === "") {
+    console.log("Please enter a valid digital twin question.");
     return;
   }
+  console.log("\nUser Question:", question);
+  console.log("\nCalling LPI tools...\n");
+  try {
+    const knowledge = await callLPITool(
+      "query_knowledge",
+      { query: question }
+    );
 
-  console.log("\nQuestion:", trimmed);
+    const caseStudy = await callLPITool(
+      "get_case_studies",
+      { industry: "manufacturing" }
+    );
 
-  console.log("\nQuerying LPI tools...\n");
+    const insight = await callLPITool(
+      "get_insights",
+      { scenario: question }
+    );
+    console.log("Knowledge:");
+    console.log(knowledge);
+    console.log("\nCase Study:");
+    console.log(caseStudy);
+    console.log("\nInsight:");
+    console.log(insight);
+    console.log("\nRecommendation:");
+    console.log("1. Start with the SMILE Reality Emulation phase.");
+    console.log("2. Model the system digitally.");
+    console.log("3. Monitor sensor data streams.");
+    console.log("4. Apply analytics to detect patterns.");
+    console.log("5. Use insights to optimize system performance.");
+  } catch (err) {
+    console.log("Error calling LPI tools:");
+    console.log(err);
 
-  const toolResults = await fetchLPIContext(trimmed, config);
-
-  console.log("Results from LPI tools:\n");
-
-  toolResults.forEach(({ tool, data, ok }) => {
-
-    console.log(ok ? "✓" : "✗", tool);
-
-    if (ok && data) {
-      console.log(data.substring(0, 300));
-    }
-
-    console.log("");
-
-  });
-
-  const recommendation = generateRecommendation(trimmed);
-
-  console.log("\n----------------------------------");
-  console.log(recommendation);
-  console.log("----------------------------------\n");
-
+  }
 }
-
-// ── CLI ─────────────────────────
-
+// CLI interface
 const rl = readline.createInterface({
   input: process.stdin,
   output: process.stdout
 });
 
 rl.question("Ask a digital twin question: ", async (question) => {
-
   await runAgent(question);
-
   rl.close();
-
 });
